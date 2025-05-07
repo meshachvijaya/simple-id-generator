@@ -9,6 +9,7 @@
         button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
     </style>
 </head>
+    
 <body>
 <h1>Generate ID: </h1>
 <p id="idDisplay">-</p>
@@ -21,17 +22,17 @@
 
         let result = '';
 
-        // 4 huruf pertama
+        // first 4 letters
         for (let i = 0; i < 4; i++) {
             result += letters.charAt(Math.floor(Math.random() * letters.length));
         }
 
-        // 4 angka ditengah
+        // 4 number in the middle
         for (let i = 0; i < 4; i++) {
             result += numbers.charAt(Math.floor(Math.random() * numbers.length));
         }
 
-        // 1 huruf terakhir
+        // one last letter
         result += letters.charAt(Math.floor(Math.random() * letters.length));
 
         return result;
@@ -39,33 +40,34 @@
 
     function generateId() {
         let ids = JSON.parse(localStorage.getItem('generateIds') || '[]');
-        console.log('ID yang sudah ada:', ids);
+        console.log('Existing IDs:', ids);
 
         function getUniqueId() {
             const newId = randomId();
-            console.log('ID baru hasil generate:', newId);
+            console.log('New ID generated:', newId);
 
             if (ids.includes(newId)) {
-                console.log('ID sudah ada, generate ulang...');
-                // ulangi jika sudah ada
+                console.log('ID is exist, regenerating ID...');
+                // rerun the function if the ID exists
                 return getUniqueId();
             } else {
-                console.log('ID unik ditemukan:', newId);
+                console.log('Unique ID found:', newId);
                 return newId;
             }
         }
 
         const uniqueId = getUniqueId();
-        console.log('ID unik yang dipakai:', uniqueId);
+        console.log('Unique ID used:', uniqueId);
 
         ids.push(uniqueId);
-        console.log('Daftar ID setelah tambah baru:', ids);
+        console.log('New ID after add ID:', ids);
 
         localStorage.setItem('generateIds', JSON.stringify(ids));
-        console.log('LocalStorage sudah diperbarui.');
+        console.log('LocalStorage updated.');
 
         document.getElementById('idDisplay').innerText = uniqueId;
     }
 </script>
+    
 </body>
 </html>
